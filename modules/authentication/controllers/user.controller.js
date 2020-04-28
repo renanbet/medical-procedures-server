@@ -1,4 +1,4 @@
-var User = require('../models/user');
+var User = require('../models/user')
 const Roles = require('../enums/roles')
 const DateService = require('../lib/date')
 const Auth = require('../lib/auth')
@@ -25,7 +25,7 @@ const getAll = async () => {
     })
 };
 
-const insert = async (username, password) => {
+const insert = async (username, password, role) => {
   let user = await User.findOne({ username })
 
   if (user) {
@@ -36,7 +36,7 @@ const insert = async (username, password) => {
   var userModel = new User()
   userModel.username = username
   userModel.password = Auth.createPasswordHash(password)
-  userModel.role = Roles.user
+  userModel.role = role
   userModel.active = true
 
   await userModel.save()
