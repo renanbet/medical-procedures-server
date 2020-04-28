@@ -45,4 +45,14 @@ router.put('/:id', Auth.ensureAuthorized, async (req, res, next) => {
   }
 });
 
+router.delete('/:id', Auth.ensureAuthorized, async (req, res, next) => {
+  try {
+    let ret = await MedicalProceduresController.remove(req.params.id)
+    res.json(ret);
+  } catch (error) {
+    res.status(400)
+      .json(error);
+  }
+});
+
 module.exports = router;

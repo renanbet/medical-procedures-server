@@ -17,7 +17,7 @@ const getAll = async () => {
 };
 
 const insert = async (procedure) => {
-  procedurue.data = new Date()
+  procedure.data = new Date()
   return await MedicalProceduresModel.create(procedure)
 };
 
@@ -32,9 +32,20 @@ const update = async (id, procedure) => {
       })
 };
 
+const remove = async (id) => {
+  return await MedicalProceduresModel
+    .destroy(
+      {
+        where: {
+          id
+        }
+      })
+};
+
 module.exports = {
   get,
   getAll,
   insert,
-  update
+  update,
+  remove
 }
