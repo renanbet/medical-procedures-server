@@ -45,6 +45,17 @@ router.put('/:id', Auth.ensureAuthorized, async (req, res, next) => {
   }
 });
 
+router.put('/:id', Auth.ensureAuthorized, async (req, res, next) => {
+  try {
+    let procedure = req.body
+    let ret = await MedicalProceduresController.update(req.params.id, procedure)
+    res.json(ret);
+  } catch (error) {
+    res.status(400)
+      .json(error);
+  }
+});
+
 router.delete('/:id', Auth.ensureAuthorized, async (req, res, next) => {
   try {
     let ret = await MedicalProceduresController.remove(req.params.id)

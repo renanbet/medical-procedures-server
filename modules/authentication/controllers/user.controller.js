@@ -27,7 +27,6 @@ const getAll = async () => {
 
 const insert = async (username, password, role) => {
   let user = await User.findOne({ username })
-
   if (user) {
     throw {
       error: "User already exists!"

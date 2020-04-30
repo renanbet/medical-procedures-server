@@ -4,7 +4,7 @@ const userController = require('../controllers/user.controller')
 const Auth = require('../lib/auth')
 const Roles = require('../enums/roles')
 
-router.post('/signin', async (req, res) => {
+router.post('/signup', async (req, res) => {
   let username = req.body.username
   let password = req.body.password
   let role = req.body.role ? req.body.role : Roles.user 

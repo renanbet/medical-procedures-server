@@ -4,11 +4,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var users = require('./modules/authentication/routes/users')
-var procedures = require('./modules/medical-procedures/routes/index')
+// var mongoose = require('mongoose');
+// mongoose.Promise = require('bluebird');
+// mongoose.connect(process.env.MONGO_URL, { useMongoClient: true })
 
-var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URL);
+// var users = require('./modules/authentication/routes/users')
+var procedures = require('./modules/medical-procedures/routes/index')
+const dbMedicalProcedures = require('./modules/medical-procedures/db/setup')
+dbMedicalProcedures.setup()
 
 var app = express();
 
@@ -26,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/users', users);
+// app.use('/users', users);
 app.use('/procedures', procedures);
 
 // catch 404 and forward to error handler
