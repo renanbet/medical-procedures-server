@@ -1,6 +1,5 @@
 var jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt')
-const AuthRoutes = require('./auth.routes')
 const saltRounds = 10;
 const TOKEN_EXP = process.env.TOKEN_EXP
 const TOKEN_EXP_REFRESH = process.env.TOKEN_EXP_REFRESH
@@ -16,15 +15,6 @@ Auth.prototype.ensureAuthorized = (req, res, next) => {
         res.sendStatus(403)
       } else {
         const user = decoded.user
-        const path = `${req.baseUrl}${req.path}`
-        
-        let route = AuthRoutes.routes.find(item => {
-          return item.path === path
-        })
-        if (route && route.roles.length && !route.roles.includes(user.role)) {
-          res.sendStatus(403)
-          return
-        }
 
         let time = Math.floor(Date.now() / 1000)
         let exp = parseInt(decoded.exp)

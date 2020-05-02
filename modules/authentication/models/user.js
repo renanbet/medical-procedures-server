@@ -1,13 +1,16 @@
-var mongoose = require('mongoose');
+const db = require('../db/db').db;
 
-var Schema = mongoose.Schema;
-
-var UserSchema = new Schema({
-    username: String,
-    password: String,
-    role: String,
-    active: Boolean,
-    lastLogin: Date
+const Users = db.define('users', {
+  id: {
+    type: db.Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  username: db.Sequelize.STRING,
+  password: db.Sequelize.STRING,
+  role: db.Sequelize.STRING
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = {
+    Users
+};

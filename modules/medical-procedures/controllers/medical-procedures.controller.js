@@ -22,10 +22,11 @@ const insert = async (procedure) => {
 };
 
 const update = async (id, procedure) => {
+  delete procedure.id
   return await MedicalProceduresModel
     .update(
       procedure,
-      {
+      {returning: true, 
         where: {
           id
         }

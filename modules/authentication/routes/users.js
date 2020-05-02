@@ -1,17 +1,16 @@
 var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/user.controller')
-const Auth = require('../lib/auth')
-const Roles = require('../enums/roles')
 
 router.post('/signup', async (req, res) => {
   let username = req.body.username
   let password = req.body.password
-  let role = req.body.role ? req.body.role : Roles.user 
+  let role = req.body.role
 
   try {
-    if (!username || !password) {
-      throw { error: "Invalid username or password!" }
+    if (!username || !password || role) {
+      res.status(400)
+      .json({ error: "Invalid username, role or password!" });
     }
     let ret = await userController.insert(username, password, role)
     res.json({data: ret})
@@ -36,30 +35,6 @@ router.post('/login', async (req, res, next) => {
     console.log(error)
     res.status(400)
       .json(error);
-  }
-});
-
-router.get('/me', Auth.ensureAuthorized, async (req, res, next) => {
-  let authUser = req.authUser
-
-  try {
-    let ret = await userController.get(authUser.id)
-    res.json({data: ret})
-  } catch (error) {
-    console.log(error)
-    res.status(400)
-      .json(error);
-  }
-});
-
-router.get('/', Auth.ensureAuthorized, async (req, res, next) => {
-  try {
-    let ret = await userController.getAll()
-    res.json({data: ret})
-  } catch (error) {
-    console.log(error)
-    res.status(400)
-      .json(error)
   }
 });
 

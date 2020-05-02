@@ -1,72 +1,53 @@
-var User = require('../models/user')
-const Roles = require('../enums/roles')
-const DateService = require('../lib/date')
+var UserModel = require('../models/user').Users
 const Auth = require('../lib/auth')
 
-const get = async (id) => {
-  let user = await User.findOne(
-    { _id: id },
-    { _id: true, username: true, lastLogin: true })
-
-  return {
-    id: user._id,
-    username: user.username,
-    lastLogin: DateService.getDate(user.lastLogin)
-  }
-};
-
-const getAll = async () => {
-  return await User.find({},
-    {
-      username: true,
-      active: true,
-      role: true,
-      lastLogin: true
-    })
-};
-
 const insert = async (username, password, role) => {
-  let user = await User.findOne({ username })
+  let user = await User.findOne(
+    {
+      where: {
+        username
+      }
+    }
+  )
   if (user) {
     throw {
       error: "User already exists!"
     }
   }
-  var userModel = new User()
-  userModel.username = username
-  userModel.password = Auth.createPasswordHash(password)
-  userModel.role = role
-  userModel.active = true
+  var newUser = {
+    username,
+    password: Auth.createPasswordHash(password),
+    role,
 
-  await userModel.save()
-  return true
+  }
+  return await UserModel.create(newUser)
 };
 
 const login = async (username, password) => {
-  let user = await User.findOne({ username })
+  let user = await UserModel.findOne(
+    {
+      where: {
+        username
+      }
+    }
+  )
+  console.log(user)
   if (!user || !Auth.passwordCompare(password, user.password)) {
     throw {
       error: "Invalid username or password!"
     }
   }
-  if (!user.active) {
-    throw {
-      error: "Inactive user!"
-    }
-  }
-  let dateNow = DateService.getToday()
-  await User.findOneAndUpdate({ username }, { lastLogin: dateNow })
-
   const userToken = {
-    id: user._id,
     role: user.role
   }
-  return Auth.createToken(userToken)
+  let token = Auth.createToken(userToken)
+  return {
+    role: user.role,
+    token
+  }
 };
 
 module.exports = {
-  get,
-  getAll,
   insert,
   login
 }
