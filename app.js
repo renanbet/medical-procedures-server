@@ -6,10 +6,24 @@ var bodyParser = require('body-parser');
 
 var users = require('./modules/authentication/routes/users')
 var procedures = require('./modules/medical-procedures/routes/index')
+
 const dbMedicalProcedures = require('./modules/medical-procedures/db/setup')
-dbMedicalProcedures.setup()
 const dbUsers = require('./modules/authentication/db/setup')
-dbUsers.setup()
+
+new Promise(async (resolve, reject) => {
+  try{
+    await dbMedicalProcedures.setup()
+    await dbUsers.setup()
+    resolve('db setup ok')
+  } catch (e) {
+    console.log(e)
+    reject('db setup error')
+  }
+}).then(data => {
+  console.log(data)
+}).catch(error => {
+  console.log(error)
+})
 
 var app = express();
 
@@ -41,6 +55,7 @@ app.use(function(req, res, next) {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  console.log(err)
   let status = err.status ? err.status : 500
   res.status(status)
   .json({

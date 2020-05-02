@@ -1,4 +1,4 @@
-const db = require('../db/db').db;
+const db = require('../../db/db').db;
 
 const MedicalProcedures = db.define('procedimentos', {
   id: {

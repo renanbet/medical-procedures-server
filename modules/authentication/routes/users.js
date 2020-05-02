@@ -8,9 +8,10 @@ router.post('/signup', async (req, res) => {
   let role = req.body.role
 
   try {
-    if (!username || !password || role) {
-      res.status(400)
-      .json({ error: "Invalid username, role or password!" });
+    if (!username || !password || !role) {
+      throw {
+        error: "Invalid username, password or role!"
+      }
     }
     let ret = await userController.insert(username, password, role)
     res.json({data: ret})

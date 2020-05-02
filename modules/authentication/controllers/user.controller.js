@@ -1,26 +1,27 @@
-var UserModel = require('../models/user').Users
+var UserModel = require('../models/user').User
 const Auth = require('../lib/auth')
 
 const insert = async (username, password, role) => {
-  let user = await User.findOne(
+  let user = await UserModel.findOne(
     {
       where: {
         username
       }
     }
   )
-  if (user) {
+  if (user != null) {
     throw {
       error: "User already exists!"
     }
   }
-  var newUser = {
+  let hashPass = Auth.createPasswordHash(password)
+  let newUser = {
     username,
-    password: Auth.createPasswordHash(password),
-    role,
-
+    password: hashPass,
+    role
   }
-  return await UserModel.create(newUser)
+  await UserModel.create(newUser)
+  return true
 };
 
 const login = async (username, password) => {
@@ -31,7 +32,6 @@ const login = async (username, password) => {
       }
     }
   )
-  console.log(user)
   if (!user || !Auth.passwordCompare(password, user.password)) {
     throw {
       error: "Invalid username or password!"

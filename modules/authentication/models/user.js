@@ -1,6 +1,6 @@
-const db = require('../db/db').db;
+const db = require('../../db/db').db;
 
-const Users = db.define('users', {
+const User = db.define('users', {
   id: {
     type: db.Sequelize.INTEGER,
     primaryKey: true,
@@ -12,5 +12,5 @@ const Users = db.define('users', {
 });
 
 module.exports = {
-    Users
+    User
 };

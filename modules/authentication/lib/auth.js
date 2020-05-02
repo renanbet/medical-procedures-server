@@ -1,6 +1,5 @@
 var jwt = require("jsonwebtoken")
-const bcrypt = require('bcrypt')
-const saltRounds = 10;
+const passwordHash = require('password-hash')
 const TOKEN_EXP = process.env.TOKEN_EXP
 const TOKEN_EXP_REFRESH = process.env.TOKEN_EXP_REFRESH
 const SECRET = process.env.SECRET
@@ -44,13 +43,12 @@ Auth.prototype.createToken = (user) => {
 }
 
 Auth.prototype.createPasswordHash = (password) => {
-  const salt = bcrypt.genSaltSync(saltRounds)
-  const hash = bcrypt.hashSync(password, salt)
+  const hash = passwordHash.generate(password)
   return hash
 }
 
 Auth.prototype.passwordCompare = (password, hash) => {
-  return bcrypt.compareSync(password, hash);
+  return passwordHash.verify(password, hash);
 }
 
 module.exports = new Auth()
