@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../modules/db/db');
 const expect = require('chai').expect;
 
 describe('Db', () => {

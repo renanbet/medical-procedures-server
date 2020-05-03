@@ -10,6 +10,7 @@ const MedicalProcedures = db.define('procedimentos', {
   idade: db.Sequelize.INTEGER,
   sexo: db.Sequelize.STRING,
   permitido: db.Sequelize.STRING,
+  motivo: db.Sequelize.STRING,
   data: db.Sequelize.DATE
 });
 

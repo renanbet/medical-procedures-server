@@ -1,4 +1,3 @@
-require('dotenv').config()
 var express = require('express');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -6,24 +5,6 @@ var bodyParser = require('body-parser');
 
 var users = require('./modules/authentication/routes/users')
 var procedures = require('./modules/medical-procedures/routes/index')
-
-const dbMedicalProcedures = require('./modules/medical-procedures/db/setup')
-const dbUsers = require('./modules/authentication/db/setup')
-
-new Promise(async (resolve, reject) => {
-  try{
-    await dbMedicalProcedures.setup()
-    await dbUsers.setup()
-    resolve('db setup ok')
-  } catch (e) {
-    console.log(e)
-    reject('db setup error')
-  }
-}).then(data => {
-  console.log(data)
-}).catch(error => {
-  console.log(error)
-})
 
 var app = express();
 
