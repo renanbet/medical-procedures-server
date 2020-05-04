@@ -2,12 +2,8 @@ FROM node:alpine
 
 WORKDIR /home/app
 
-RUN npm install mocha -g
-
-COPY package*.json ./
+COPY . .
 
 RUN npm install
-
-COPY . .
 
 CMD ["npm", "test"]
