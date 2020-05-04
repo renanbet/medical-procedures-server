@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 
 var users = require('./modules/authentication/routes/users')
 var procedures = require('./modules/medical-procedures/routes/index')
+var index = require('./modules/index/routes')
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use('/', index);
 app.use('/users', users);
 app.use('/procedures', procedures);
 
