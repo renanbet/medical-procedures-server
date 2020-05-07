@@ -11,7 +11,7 @@ Auth.prototype.ensureAuthorized = (req, res, next) => {
   if (token) {
     jwt.verify(token, SECRET, (err, decoded) => {
       if (err) {
-        res.sendStatus(403)
+        res.sendStatus(401)
       } else {
         const user = decoded.user
 
@@ -30,7 +30,7 @@ Auth.prototype.ensureAuthorized = (req, res, next) => {
       }
     })
   } else {
-    res.sendStatus(403);
+    res.sendStatus(401);
   }
 }
 
