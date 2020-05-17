@@ -1,13 +1,13 @@
-# medical-procedures-server
+# Medical procedures server
 
-## Instruções em
+## More instructions
 
 https://github.com/renanbet/medical-procedures-compose
 
 
-## O app
+## The app
 
-- Desenvolvido em Nodejs e Express
-- Testes unitários com Mocha e Chai
-- Api token com JWT
-- Sequelize com mysql
+- Use Nodejs and Express on development
+- Unit tests with Mocha and Chai
+- JWT api token
+- Sequelize ORM with mysql
