@@ -15,7 +15,7 @@
     "generate-password": "^1.5.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": ">=4.2.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.28",
     "morgan": "~1.6.1",
     "mysql2": "^2.1.0",
